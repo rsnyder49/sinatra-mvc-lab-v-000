@@ -1,8 +1,7 @@
 class PigLatinizer
   
   def piglatinize(word)
-    if %w[and an in].include?(word) 
-      word 
+    return word if %w[and an in].include?(word)
     end
     
     letters = word.split("")
