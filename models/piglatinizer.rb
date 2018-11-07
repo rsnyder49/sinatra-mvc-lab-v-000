@@ -1,30 +1,31 @@
 class PigLatinizer
   
-  def piglatinize(word)
-    if %w[and an in].include?(word) 
-      word 
+  def piglatinize(input_str)
+    x = (input_str.split(" ").length == 1) ? piglatinize_word(input_str) : piglatinize_sentence(input_str)
+    puts x
+    x
+  end
+   private
+   def consonant?(char)
+    !char.match(/[aAeEiIoOuU]/)
+  end
+   def piglatinize_word(word)
+    # word starts with vowel
+    if !consonant?(word[0])
+      word = word + "w"
+    # word starts with 3 consonants
+    elsif consonant?(word[0]) && consonant?(word[1]) && consonant?(word[2])
+      word = word.slice(3..-1) + word.slice(0,3)
+    # word starts with 2 consonants
+    elsif consonant?(word[0]) && consonant?(word[1])
+      word = word.slice(2..-1) + word.slice(0,2)
+    # word starts with 1 consonant
+    else
+      word = word.slice(1..-1) + word.slice(0)
     end
-    
-    letters = word.split("")
-    letters.keep_if {|letter| letter != "."}
-    if letters.size > 1
-      until vowel?(letters[0]) 
-        letters << letters.shift
-      end
-      letters  << "ay"
-    end
-    letters.join
+    word << "ay"
   end
-  
-  def to_pig_latin(text)
-    words = text.split(" ")
-    words.map! {|word| piglatinize(word)}
-    words.join(" ")
+   def piglatinize_sentence(sentence)
+    sentence.split.collect { |word| piglatinize_word(word) }.join(" ")
   end
-  
-  def vowel?(letter)
-    letter.downcase
-    letter == "o" || letter == "e" || letter == "a" || letter == "i" || letter == "u"
-  end
-    
  end 
