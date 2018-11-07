@@ -1,8 +1,7 @@
 class PigLatinizer
   
   def piglatinize(str)
-    x = (str.split(" ").length == 1) ? piglatinize_word(str) : piglatinize_sentence(str)
-    
+    pl = (str.split(" ").length == 1) ? piglatinize_word(str) : piglatinize_sentence(str)
   end
   
   def consonant?(letter)
@@ -26,4 +25,4 @@ class PigLatinizer
     sentence.split.collect { |word| piglatinize_word(word) }.join(" ")
   end
   
- end 
+end 
